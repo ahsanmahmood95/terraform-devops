@@ -48,17 +48,26 @@ resource "aws_security_group" "my_security_group" {
 #ec2 instance
 
 resource "aws_instance" "my_instance" {
+#  count = 2  # meta argument will create 2 instances with same names
+    for_each = tomap({
+      terra-practice-1 = "t3.micro"
+      terra-practice-2 = "t3.small"
+      terra-practice-3 = "m7i-flex.large"
+    })
+
+    depends_on = [ aws_security_group.my_security_group, aws_key_pair.my-key_aws ]
+
     key_name = aws_key_pair.my-key_aws.key_name
     security_groups = [aws_security_group.my_security_group.name]
-    instance_type = var.ec2_instance_type
+    instance_type = each.value
     ami = var.ec2_ami_id
     user_data = file("install_nginx.sh")
     root_block_device {
-      volume_size = var.ec2_root_storage_size
+      volume_size = var.env == "prd" ? 20 : var.ec2_default_root_storage_size
       volume_type = "gp3"
     }
     tags = {
-      Name = "self-terra-instance"
+      Name = each.key
     }
   
 }
