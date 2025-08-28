@@ -52,7 +52,6 @@ resource "aws_instance" "my_instance" {
     for_each = tomap({
       terra-practice-1 = "t3.micro"
       terra-practice-2 = "t3.small"
-      terra-practice-3 = "m7i-flex.large"
     })
 
     depends_on = [ aws_security_group.my_security_group, aws_key_pair.my-key_aws ]
@@ -71,3 +70,9 @@ resource "aws_instance" "my_instance" {
     }
   
 }
+# to import a manually created ec2 instance from aws to terraform
+/* 
+resource "aws_instance" "my_new_instance" {
+  instance_type = "unknown"
+  ami = "unknown"
+} */
