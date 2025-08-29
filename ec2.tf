@@ -11,7 +11,7 @@ resource "aws_default_vpc" "default" {
 }
 
 resource "aws_security_group" "my_security_group" {
-    name = "alpha-group"
+    name = "alpha-group-b"
     description = "security-group"
     vpc_id = aws_default_vpc.default.id
 
