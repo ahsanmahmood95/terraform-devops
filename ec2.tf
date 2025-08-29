@@ -11,7 +11,7 @@ resource "aws_default_vpc" "default" {
 }
 
 resource "aws_security_group" "my_security_group" {
-    name = "alpha-group"
+    name = "alpha-group-b"
     description = "security-group"
     vpc_id = aws_default_vpc.default.id
 
@@ -51,7 +51,6 @@ resource "aws_instance" "my_instance" {
 #  count = 2  # meta argument will create 2 instances with same names
     for_each = tomap({
       terra-practice-1 = "t3.micro"
-      terra-practice-2 = "t3.small"
     })
 
     depends_on = [ aws_security_group.my_security_group, aws_key_pair.my-key_aws ]
@@ -67,6 +66,7 @@ resource "aws_instance" "my_instance" {
     }
     tags = {
       Name = each.key
+      enviornment = var.env
     }
   
 }
