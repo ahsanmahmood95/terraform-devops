@@ -13,7 +13,7 @@ variable "ec2_ami_id" {
 
 #to add condition if enviornment is dev
 variable "env" {
-    default = "prd"
+    default = "dev"
     type = string
   
 }
