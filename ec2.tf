@@ -2,7 +2,9 @@
 resource "aws_key_pair" "my-key_aws" {
     key_name = "terra-key"
     public_key = file("terra-ec2-key.pub")
-  
+    tags = {
+      Environment = var.env
+    }
 }
 
 # VPC and security group
@@ -41,6 +43,7 @@ resource "aws_security_group" "my_security_group" {
     }
     tags = {
       Name = "alpha-group"
+      enviornment = var.env
     }
   
 }
