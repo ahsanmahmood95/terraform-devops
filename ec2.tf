@@ -1,6 +1,6 @@
 #key pairs
 resource "aws_key_pair" "my-key_aws" {
-    key_name = "terra-key"
+    key_name = "${var.env}-terra-key"
     public_key = file("terra-ec2-key.pub")
     tags = {
       Environment = var.env
@@ -13,7 +13,7 @@ resource "aws_default_vpc" "default" {
 }
 
 resource "aws_security_group" "my_security_group" {
-    name = "alpha-group"
+    name = "${var.env}-alpha-group"
     description = "security-group"
     vpc_id = aws_default_vpc.default.id
 
@@ -42,7 +42,7 @@ resource "aws_security_group" "my_security_group" {
         description = "open to all outbounds"
     }
     tags = {
-      Name = "alpha-group"
+      Name = "${var.env}-alpha-group"
       enviornment = var.env
     }
   
